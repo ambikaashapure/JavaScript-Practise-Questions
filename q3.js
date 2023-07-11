@@ -1,23 +1,28 @@
-//Solution to question 3
+//Function to generate a random number
+function randomNumber() {
+    return new Promise((resolve, reject) => {
+    const num = Math.floor(Math.random() * 7);
 
-function randomNumber(){
-    return new Promise ((resolve, reject)=> {
-        const num = Math.floor(Math.random()*7);
-
-        resolve(num);
+    if (num >= 1 && num <= 6) {
+          resolve(num);
+    } else {
+          reject("Invalid random number generated");
+    }
     });
 }
 
-function playGame(){
-    return new Promise((resolve,reject)=>{
-        let points = 0
+//function of actual game
+function playGame() {
+    return new Promise((resolve, reject) => {
+    let points = 0;
 
-function makeGuess(){
-    const guess = parseInt(prompt("Enter a number between 1 and 6"));
-    randomNumber()
-    .then(num =>{(console.log("Randome numbre is ",num));
+function makeGuess() {
+  const guess = parseInt(prompt("Enter a number between 1 and 6"));
+  randomNumber()
+    .then(num => {
+      console.log("Random number is", num);
 
-    if (guess === num) {
+      if (guess === num) {
         points += 2;
         console.log("Congratulations! You guessed correctly, 2 points");
       } else if (Math.abs(guess - num) === 1) {
@@ -29,19 +34,25 @@ function makeGuess(){
 
       const playAgain = confirm("Do you want to play again?");
 
-      if(playAgain){
+      if (playAgain) {
         makeGuess();
+      } else {
+        resolve(`Game over, total score: ${points}`);
       }
-      else{
-        resolve(`game over, total score : ${points}`)
-      }
-})
-}
-makeGuess();
+    })
+    .catch(error => {
+      reject(error); 
     });
 }
 
+makeGuess();
+});
+}
+// calling the main function
 playGame()
-  .then(result => {
-    console.log(result);
-  })
+.then(result => {
+console.log(result);
+})
+.catch(error => {
+console.log(error);
+});
