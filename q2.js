@@ -1,28 +1,24 @@
-//Solution to question 2
+// function to filter out the same key and value pair.
 
 function objectFilter(obj, callback) {
-    var filteredObj = {};
-  
-    for (var key in obj) {
-      var value = obj[key];
-      if (callback(key) === value) {
+    return Object.entries(obj).reduce((filteredObj, [key, value]) => {
+    if (callback(value) === value) {
         filteredObj[key] = value;
-      }
     }
-  
     return filteredObj;
-  }
-  
- 
-  const cities = {
+    }, {});
+}
+
+const cities = {
     London: "LONDON",
     LA: "Los Angeles",
     Paris: "PARIS",
-  };
-  
-  function uppercaseCity(city) {
+};
+
+// function to convert value in uppercase.
+
+function uppercaseCity(city) {
     return city.toUpperCase();
-  }
-  
-  console.log(objectFilter(cities, uppercaseCity));
-  
+}
+
+console.log(objectFilter(cities, uppercaseCity));
